@@ -1,0 +1,27 @@
+multi.lnd.mtrc<-function(ptos,lnd,scl,mrtc,bkgrd){
+  
+  lnd[lnd==bkgrd]<-NA
+  
+  m.foo<-data.frame(matrix(nrow=nrow(ptos@data)))
+  m.foo<-m.foo[,-1]
+  
+  for(i in 1:length(scl)){
+    
+    for (j in 1:length(mrtc)){
+    
+    foo.mt<-land.metrics(ptos,lnd,metrics = mrtc[j],bw=scl[i])
+    
+      for (k in 1:length(foo.mt)){
+        foo<-foo.mt[[k]][2]
+        foo[is.na(foo)]<-0
+        foo[,1]<-as.numeric(as.character(foo[,1]))
+        colnames(foo)<-paste(colnames(foo),foo.mt[[k]][2,1],paste("scl",scl[i],sep=""),sep="_")
+        m.foo<-cbind(m.foo,foo)
+        
+      }
+    
+    }  
+    
+  }
+ return(m.foo) 
+}  

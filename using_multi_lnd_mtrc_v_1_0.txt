@@ -1,0 +1,21 @@
+#REQUIRED PACKAGES
+library(raster)
+library(rgdal)
+library(spatialEco)
+
+#SETTING WORKING DIRECTORY
+setwd("C:\\lnd_metric\\C:\multi_lnd_mtrc_v_1_0")
+
+lnd<-raster("lnd_use.tif") # importing landuse raster
+
+ptos<-readOGR(dsn = ".", layer = "ptos") # loading sampling points shape
+
+scl<-c(50,100 ) # effect scales
+
+mrtc<-c("n.patches","edge.density") # metrics code from function "land.metrics" in "SpatialEco" package
+
+bkgrd<-0 # background code
+
+test<-multi.lnd.mtrc(ptos,lnd,scl,mrtc,bkgrd)
+
+View(test)
